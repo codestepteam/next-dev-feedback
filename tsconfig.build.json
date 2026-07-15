@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": false,
+    "inlineSources": true,
+    "sourceMap": true,
+    "tsBuildInfoFile": "./node_modules/.cache/next-dev-feedback.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/styles.d.ts"],
+  "exclude": ["dist", "node_modules", "tests"]
+}

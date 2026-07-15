@@ -1,0 +1,94 @@
+{
+  "name": "@codestepteam/next-dev-feedback",
+  "version": "0.1.0-beta.0",
+  "description": "Development-only DOM feedback capture for Next.js App Router projects.",
+  "keywords": [
+    "next.js",
+    "react",
+    "developer-tools",
+    "ui-feedback",
+    "screenshot",
+    "server-actions"
+  ],
+  "homepage": "https://github.com/codestepteam/next-dev-feedback#readme",
+  "bugs": {
+    "url": "https://github.com/codestepteam/next-dev-feedback/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codestepteam/next-dev-feedback.git"
+  },
+  "license": "MIT",
+  "author": "Codestepteam",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/noop.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "development": "./dist/index.js",
+      "production": "./dist/noop.js",
+      "default": "./dist/noop.js"
+    },
+    "./types": {
+      "types": "./dist/shared/types.d.ts",
+      "import": "./dist/shared/types.js",
+      "default": "./dist/shared/types.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "next-dev-feedback": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build:js": "tsc -p tsconfig.build.json",
+    "build:css": "node scripts/copy-css.mjs",
+    "build": "npm run clean && npm run build:js && npm run build:css && npm run verify:directives && npm run verify:dist",
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "tsx --test tests/*.test.mjs",
+    "verify:directives": "node scripts/verify-directives.mjs",
+    "verify:dist": "node scripts/verify-dist.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run build",
+    "pack:check": "npm run verify && node scripts/verify-pack.mjs",
+    "prepack": "npm run verify && node scripts/verify-pack.mjs"
+  },
+  "dependencies": {
+    "html2canvas-pro": "^2.2.4",
+    "server-only": "^0.0.1"
+  },
+  "peerDependencies": {
+    "next": ">=16.2.0 <17",
+    "react": ">=19.2.0 <20",
+    "react-dom": ">=19.2.0 <20"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.2.10",
+    "linkedom": "^0.18.13",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tsx": "^4.23.1",
+    "typescript": "^5.9.0"
+  }
+}

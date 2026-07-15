@@ -1,0 +1,589 @@
+.devFeedbackRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  color: #f8fafc;
+  color-scheme: dark;
+  font-family:
+    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  isolation: isolate;
+}
+
+.devFeedbackRoot,
+.devFeedbackRoot * {
+  box-sizing: border-box;
+}
+
+.devFeedbackButton {
+  position: absolute;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 17px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: #111827;
+  box-shadow:
+    0 14px 35px rgba(15, 23, 42, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.devFeedbackButton:hover {
+  transform: translateY(-2px);
+  background: #1e293b;
+  box-shadow:
+    0 17px 40px rgba(15, 23, 42, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.devFeedbackButton:focus-visible,
+.devFeedbackIconButton:focus-visible,
+.devFeedbackPrimaryButton:focus-visible,
+.devFeedbackSecondaryButton:focus-visible,
+.devFeedbackField input:focus-visible,
+.devFeedbackField textarea:focus-visible {
+  outline: 3px solid rgba(96, 165, 250, 0.48);
+  outline-offset: 2px;
+}
+
+.devFeedbackButton:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.devFeedbackButtonIcon {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.devFeedbackCaptureSurface {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+  cursor: crosshair;
+  touch-action: pan-x pan-y;
+  background: transparent;
+}
+
+.devFeedbackSelectionNotice {
+  position: fixed;
+  z-index: 5;
+  top: max(18px, env(safe-area-inset-top));
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 258px;
+  padding: 10px 14px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.94);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.28);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+  font-weight: 700;
+}
+
+.devFeedbackSelectionNotice small {
+  display: block;
+  margin-top: 1px;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.devFeedbackSelectionDot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #60a5fa;
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.16);
+}
+
+.devFeedbackSelectionNoticeError {
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.devFeedbackSelectionNoticeError .devFeedbackSelectionDot {
+  background: #f87171;
+  box-shadow: 0 0 0 5px rgba(248, 113, 113, 0.15);
+}
+
+.devFeedbackHighlight {
+  position: fixed;
+  z-index: 3;
+  border: 2px solid #3b82f6;
+  border-radius: 3px;
+  background: rgba(59, 130, 246, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.92),
+    0 6px 24px rgba(37, 99, 235, 0.2);
+  pointer-events: none;
+  transition:
+    left 35ms linear,
+    top 35ms linear,
+    width 35ms linear,
+    height 35ms linear;
+}
+
+.devFeedbackTargetLabel {
+  position: fixed;
+  z-index: 4;
+  overflow: hidden;
+  max-width: min(360px, calc(100vw - 16px));
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #2563eb;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+  color: #fff;
+  pointer-events: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.devFeedbackDialogLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+  background: rgba(2, 6, 23, 0.4);
+  backdrop-filter: blur(2px);
+  pointer-events: auto;
+}
+
+.devFeedbackDialog {
+  display: flex;
+  overflow: hidden;
+  width: min(440px, 100%);
+  height: 100%;
+  flex-direction: column;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 18px;
+  background: #0f172a;
+  box-shadow: -12px 0 48px rgba(2, 6, 23, 0.36);
+  color: #e2e8f0;
+  pointer-events: auto;
+}
+
+.devFeedbackDialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.devFeedbackEyebrow {
+  margin: 0 0 3px;
+  color: #60a5fa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.devFeedbackDialogHeader h2 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.devFeedbackIconButton {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 9px;
+  background: rgba(30, 41, 59, 0.72);
+  color: #cbd5e1;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.devFeedbackIconButton:hover {
+  background: #334155;
+  color: #fff;
+}
+
+.devFeedbackIconButton:disabled {
+  opacity: 0.42;
+  cursor: wait;
+}
+
+.devFeedbackForm {
+  display: flex;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 17px;
+  padding: 18px 20px 20px;
+  overscroll-behavior: contain;
+}
+
+.devFeedbackDialogIntro {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.devFeedbackPreview {
+  padding: 14px;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.devFeedbackSectionHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.devFeedbackSectionHeading h3 {
+  margin: 0;
+  color: #f1f5f9;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.devFeedbackTag {
+  padding: 2px 7px;
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.15);
+  color: #93c5fd;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.devFeedbackDefinitionList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.devFeedbackDefinitionList > div {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.devFeedbackDefinitionList dt {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.devFeedbackDefinitionList dd {
+  overflow: hidden;
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 11px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.devFeedbackDefinitionList code {
+  color: #bfdbfe;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.devFeedbackField {
+  display: grid;
+  gap: 7px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.devFeedbackField > span {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.devFeedbackField > span small,
+.devFeedbackField > small {
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.devFeedbackField b {
+  color: #f87171;
+}
+
+.devFeedbackField input,
+.devFeedbackField textarea {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 10px;
+  background: #111c30;
+  color: #f8fafc;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.55;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.devFeedbackField input {
+  height: 42px;
+  padding: 0 12px;
+}
+
+.devFeedbackField textarea {
+  min-height: 124px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.devFeedbackField input::placeholder,
+.devFeedbackField textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.devFeedbackField input:hover,
+.devFeedbackField textarea:hover,
+.devFeedbackField input:focus,
+.devFeedbackField textarea:focus {
+  border-color: rgba(96, 165, 250, 0.7);
+}
+
+.devFeedbackField input:disabled,
+.devFeedbackField textarea:disabled {
+  opacity: 0.62;
+  cursor: wait;
+}
+
+.devFeedbackProgress,
+.devFeedbackWarning,
+.devFeedbackError {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.devFeedbackProgress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 99, 235, 0.14);
+  color: #bfdbfe;
+}
+
+.devFeedbackProgress > span {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+  border: 2px solid rgba(147, 197, 253, 0.35);
+  border-top-color: #93c5fd;
+  border-radius: 50%;
+  animation: devFeedbackSpin 700ms linear infinite;
+}
+
+.devFeedbackWarning {
+  border: 1px solid rgba(251, 191, 36, 0.24);
+  background: rgba(180, 83, 9, 0.16);
+  color: #fde68a;
+}
+
+.devFeedbackError {
+  border: 1px solid rgba(248, 113, 113, 0.28);
+  background: rgba(153, 27, 27, 0.18);
+  color: #fecaca;
+}
+
+.devFeedbackDialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 3px;
+}
+
+.devFeedbackPrimaryButton,
+.devFeedbackSecondaryButton {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.devFeedbackPrimaryButton {
+  border: 1px solid #3b82f6;
+  background: #2563eb;
+  color: #fff;
+}
+
+.devFeedbackPrimaryButton:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.devFeedbackSecondaryButton {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(30, 41, 59, 0.72);
+  color: #cbd5e1;
+}
+
+.devFeedbackSecondaryButton:hover:not(:disabled) {
+  background: #334155;
+  color: #fff;
+}
+
+.devFeedbackPrimaryButton:disabled,
+.devFeedbackSecondaryButton:disabled {
+  opacity: 0.46;
+  cursor: not-allowed;
+}
+
+.devFeedbackSuccess {
+  display: flex;
+  overflow-y: auto;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+  padding: 28px 20px 20px;
+}
+
+.devFeedbackSuccessIcon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  border-radius: 50%;
+  background: rgba(5, 150, 105, 0.16);
+  color: #6ee7b7;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.devFeedbackSuccess strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #f8fafc;
+  font-size: 15px;
+}
+
+.devFeedbackSuccess p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.devFeedbackDirectory {
+  overflow-wrap: anywhere;
+  padding: 12px;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.72);
+  color: #bfdbfe;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.devFeedbackSuccess .devFeedbackPrimaryButton {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+@keyframes devFeedbackSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 560px) {
+  .devFeedbackButton {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+
+  .devFeedbackDialogLayer {
+    padding: 0;
+  }
+
+  .devFeedbackDialog {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .devFeedbackSelectionNotice {
+    top: max(10px, env(safe-area-inset-top));
+    min-width: 0;
+    width: calc(100% - 20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .devFeedbackButton,
+  .devFeedbackHighlight {
+    transition: none;
+  }
+
+  .devFeedbackProgress > span {
+    animation-duration: 1.4s;
+  }
+}
