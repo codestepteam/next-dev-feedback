@@ -3,12 +3,12 @@
 ## 사전 조건
 
 - GitHub 저장소: `codestepteam/next-dev-feedback`
-- npm package: `@codestepteam/next-dev-feedback`
-- npm의 `codestepteam` 조직과 package publish 권한
+- npm package: `@tallpizza/next-dev-feedback`
+- npm 사용자 `tallpizza`와 `@tallpizza` scope package publish 권한
 - Node.js `>=20.9.0`
 
-GitHub 조직 권한과 npm 조직 권한은 별개입니다. 배포 전 `npm whoami`와 npm
-조직 멤버십을 확인하세요.
+GitHub 저장소 권한과 npm 사용자 scope 권한은 별개입니다. 배포 전
+`npm whoami`가 `tallpizza`인지 확인하세요.
 
 ## 로컬 검증
 
@@ -25,7 +25,7 @@ npm run pack:check
 
 ```bash
 npm pack
-npm install /absolute/path/codestepteam-next-dev-feedback-0.1.0-beta.0.tgz
+npm install /absolute/path/tallpizza-next-dev-feedback-0.1.0-beta.0.tgz
 ```
 
 검증용 Next.js App Router 프로젝트에서 다음 항목을 확인하세요.
@@ -35,7 +35,7 @@ npm install /absolute/path/codestepteam-next-dev-feedback-0.1.0-beta.0.tgz
 3. `.feedback/README.md`, `summary.json`, `metadata.json` 구조
 4. `next build`와 `next start`에서 버튼과 저장 동작이 없음
 5. tarball 설치 후 TypeScript 타입과 CSS가 정상 해석됨
-6. `npx @codestepteam/next-dev-feedback init --check` 통과
+6. `npx @tallpizza/next-dev-feedback init --check` 통과
 
 ## beta 배포
 
@@ -48,14 +48,14 @@ npm publish --access public --tag beta
 배포 확인:
 
 ```bash
-npm view @codestepteam/next-dev-feedback@beta version
-npm view @codestepteam/next-dev-feedback@beta dist.tarball
+npm view @tallpizza/next-dev-feedback@beta version
+npm view @tallpizza/next-dev-feedback@beta dist.tarball
 ```
 
 일반 설치 예시는 beta 기간 동안 명시적인 tag를 사용할 수 있습니다.
 
 ```bash
-npm install @codestepteam/next-dev-feedback@beta
+npm install @tallpizza/next-dev-feedback@beta
 ```
 
 ## stable 배포

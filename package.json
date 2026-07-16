@@ -1,5 +1,5 @@
 {
-  "name": "@codestepteam/next-dev-feedback",
+  "name": "@tallpizza/next-dev-feedback",
   "version": "0.1.0-beta.0",
   "description": "Development-only DOM feedback capture for Next.js App Router projects.",
   "keywords": [
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/codestepteam/next-dev-feedback.git"
   },
   "license": "MIT",
-  "author": "Codestepteam",
+  "author": "Tallpizza",
   "type": "module",
   "sideEffects": [
     "**/*.css"

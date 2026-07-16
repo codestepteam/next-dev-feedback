@@ -12,7 +12,7 @@ import path from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin, stdout } from "node:process";
 
-const PACKAGE_NAME = "@codestepteam/next-dev-feedback";
+const PACKAGE_NAME = "@tallpizza/next-dev-feedback";
 const DEFAULT_BODY_SIZE_LIMIT = "32mb";
 const NEXT_CONFIG_NAMES = [
   "next.config.ts",
@@ -737,8 +737,8 @@ function chooseCaptureLocalName(source: string): string {
   if (!/\bDevFeedbackCapture\b/.test(maskNonCode(source))) {
     return "DevFeedbackCapture";
   }
-  if (!/\bCodestepDevFeedbackCapture\b/.test(maskNonCode(source))) {
-    return "CodestepDevFeedbackCapture";
+  if (!/\bNextDevFeedbackCapture\b/.test(maskNonCode(source))) {
+    return "NextDevFeedbackCapture";
   }
   throw new CliError(
     "The root layout already declares DevFeedbackCapture identifiers. Add the package import manually and rerun with --no-layout.",

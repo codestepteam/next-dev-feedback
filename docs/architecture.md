@@ -2,7 +2,7 @@
 
 ## 실행 경계
 
-`@codestepteam/next-dev-feedback`는 한 가지 공개 컴포넌트 뒤에서 브라우저와
+`@tallpizza/next-dev-feedback`는 한 가지 공개 컴포넌트 뒤에서 브라우저와
 서버 책임을 분리합니다.
 
 ```text

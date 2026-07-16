@@ -95,7 +95,7 @@ test("root layout insertion is development-only, mode-aware, and idempotent", ()
   assert.equal(first.changed, true);
   assert.match(
     first.content,
-    /import \{ DevFeedbackCapture \} from "@codestepteam\/next-dev-feedback";/,
+    /import \{ DevFeedbackCapture \} from "@tallpizza\/next-dev-feedback";/,
   );
   assert.match(
     first.content,
@@ -123,18 +123,32 @@ test("root layout insertion is development-only, mode-aware, and idempotent", ()
 test("root layout import detection does not cross an earlier named import", () => {
   const initialized = transformRootLayout(BASE_LAYOUT);
   const withEarlierNamedImport = initialized.content.replace(
-    'import { DevFeedbackCapture } from "@codestepteam/next-dev-feedback";',
+    'import { DevFeedbackCapture } from "@tallpizza/next-dev-feedback";',
     `import { Geist } from "next/font/google";
-import { DevFeedbackCapture } from "@codestepteam/next-dev-feedback";`,
+import { DevFeedbackCapture } from "@tallpizza/next-dev-feedback";`,
   );
 
   const result = transformRootLayout(withEarlierNamedImport);
   assert.equal(result.changed, false);
   assert.equal(result.content, withEarlierNamedImport);
   assert.equal(
-    result.content.match(/from "@codestepteam\/next-dev-feedback"/g)?.length,
+    result.content.match(/from "@tallpizza\/next-dev-feedback"/g)?.length,
     1,
   );
+});
+
+test("root layout uses a neutral alias when the default local name is occupied", () => {
+  const source = BASE_LAYOUT.replace(
+    "export default function RootLayout",
+    "const DevFeedbackCapture = null;\n\nexport default function RootLayout",
+  );
+
+  const result = transformRootLayout(source);
+  assert.match(
+    result.content,
+    /import \{ DevFeedbackCapture as NextDevFeedbackCapture \} from "@tallpizza\/next-dev-feedback";/,
+  );
+  assert.match(result.content, /<NextDevFeedbackCapture \/>/);
 });
 
 test("root layout transform refuses ambiguous or incompatible layouts", () => {
